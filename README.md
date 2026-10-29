@@ -72,10 +72,9 @@ This is an illustrative example of the expected response format. Actual results 
 ```
 
 ## Output Demonstration Video
+Watch the demonstration of the Enterprise Structured Ingestion Firewall, including message submission and the generated structured JSON output.
 
-Watch the demonstration of the application, including message submission and the generated structured output.
-
-[▶ Watch the Output Demonstration Video](docs/demo.mp4)
+[▶ Watch the Week 1 Project Demo on Google Drive](https://drive.google.com/file/d/1Wsg1BsgpSTTPY3f8rw0sntofXWJckyIb/view?usp=sharing)
 
 ## Installation and Execution
 
