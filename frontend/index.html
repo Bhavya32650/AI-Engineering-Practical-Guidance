@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Structured Ingestion Firewall</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>Enterprise Structured Ingestion Firewall</h1>
+            <p class="subtitle">
+                Transform unstructured support and financial messages
+                into structured, validated JSON using AI.
+            </p>
+        </header>
+
+        <section class="card">
+            <form id="ingestionForm">
+                <label for="message">
+                    Enter your support or financial message
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    rows="6"
+                    minlength="1"
+                    maxlength="5000"
+                    placeholder="Example: My payment was deducted twice. Please resolve this urgently."
+                    required
+                ></textarea>
+
+                <p class="hint">
+                    Maximum 5,000 characters. Do not enter passwords,
+                    OTPs, or full payment card numbers.
+                </p>
+
+                <button id="submitButton" type="submit">
+                    Analyze Message
+                </button>
+
+                <div id="status" role="status" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <section id="resultSection" class="card hidden">
+            <div class="result-header">
+                <h2>Validated JSON Response</h2>
+                <button id="copyJsonButton" type="button" class="copy-json-button">
+                    Copy JSON
+                </button>
+            </div>
+
+            <pre id="result"></pre>
+        </section>
+
+        <footer>
+            <p class="hint">
+                Powered by FastAPI, Groq, Instructor, Pydantic and tiktoken.
+            </p>
+        </footer>
+    </main>
+</body>
+</html>
