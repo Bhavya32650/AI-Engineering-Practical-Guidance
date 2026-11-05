@@ -1,17 +1,19 @@
 
 import logging
 import os
+from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import ValidationError
 
+from app.schemas.assistant import AssistantResult
 from app.schemas.ingestion import (
     IngestionRequest,
-    IngestionResult,
     TokenMetadata,
 )
 from app.services.llm_service import analyze_message
+from app.services.response_service import generate_response
 from app.utils.token_counter import estimate_tokens
 
 
@@ -21,10 +23,10 @@ logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Enterprise Structured Ingestion Firewall",
     description=(
-        "Validates incoming support messages and converts them "
-        "into structured, validated JSON using an LLM."
+        "Validates incoming support messages, detects intent, "
+        "and generates context-aware AI responses."
     ),
-    version="1.0.0",
+    version="2.0.0",
 )
 
 # Allow the local frontend to communicate with FastAPI
@@ -51,11 +53,19 @@ def health_check():
     }
 
 
-@app.post("/api/ingest", response_model=IngestionResult)
+@app.post("/api/ingest", response_model=AssistantResult)
 def ingest_message(request: IngestionRequest):
-    """Validate, classify, and return structured JSON."""
+    """Detect intent and generate an AI response."""
 
-    token_count = estimate_tokens(request.message)
+    message = request.message.strip()
+
+    if not message:
+        raise HTTPException(
+            status_code=422,
+            detail="Message cannot be empty.",
+        )
+
+    token_count = estimate_tokens(message)
 
     if token_count > MAX_INPUT_TOKENS:
         raise HTTPException(
@@ -68,13 +78,15 @@ def ingest_message(request: IngestionRequest):
         )
 
     try:
-        result = analyze_message(request.message)
+        # WEEK 1: Detect and classify the user's intent.
+        result = analyze_message(message)
 
+        # Add token metadata from Week 1.
         metadata = TokenMetadata(
             estimated_input_tokens=token_count,
             note=(
                 "Estimated locally; may differ from provider "
-                "token counts."
+                "token] counts."
             ),
         )
 
@@ -82,19 +94,33 @@ def ingest_message(request: IngestionRequest):
             update={"token_metadata": metadata}
         )
 
-        return result
+        # WEEK 2: Generate a context-aware response using the LLM.
+        response_markdown = generate_response(
+            result,
+            history=[],
+            current_message=message,
+        )
+
+        # Return both Week 1 and Week 2 results.
+        return AssistantResult(
+            **result.model_dump(),
+            session_id=str(uuid4()),
+            response_markdown=response_markdown,
+        )
 
     except ValidationError as error:
         logger.warning(
             "LLM response validation failed: %s", error
         )
+
         raise HTTPException(
             status_code=502,
             detail="The LLM returned data that failed validation.",
         ) from error
 
     except Exception as error:
-        logger.exception("Message ingestion failed")
+        logger.exception("Message processing failed")
+
         raise HTTPException(
             status_code=502,
             detail="Unable to process the message using the LLM.",
