@@ -1,4 +1,3 @@
-
 # Secrets
 .env
 .env.*
@@ -17,6 +16,10 @@ __pycache__/
 *.db
 *.sqlite3
 *.log
+
+# Frontend dependencies and builds
+node_modules/
+dist/
 
 # Editor files
 .vscode/
