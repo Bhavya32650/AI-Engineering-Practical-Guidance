@@ -68,6 +68,8 @@ intent/
 ├── package.json
 ├── package-lock.json
 └── README.md
+
+
 ## Key Features
 
 - Unique session ID for every conversation.
@@ -78,6 +80,7 @@ intent/
 - Sends chat history to Groq for context-aware responses.
 - Markdown-formatted AI responses.
 - Error handling and API validation.
+
 
 ## Expected Workflow
 
