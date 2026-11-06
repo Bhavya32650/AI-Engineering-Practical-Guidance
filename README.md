@@ -35,32 +35,27 @@ The application uses **FastAPI, React, Groq LLM, and SQLite** to manage conversa
 - Pydantic
 - Uvicorn
 
-Project Folder Structure
+## Project Folder Structure
 
+```text
 intent/
-│
 ├── backend/
 │   ├── app/
 │   │   ├── schemas/
 │   │   │   ├── assistant.py
 │   │   │   └── ingestion.py
-│   │   │
 │   │   ├── services/
 │   │   │   ├── llm_service.py
 │   │   │   ├── response_service.py
 │   │   │   ├── database_service.py
 │   │   │   ├── conversation_service.py
 │   │   │   └── memory_service.py
-│   │   │
 │   │   ├── utils/
 │   │   │   └── token_counter.py
-│   │   │
 │   │   ├── config.py
 │   │   └── main.py
-│   │
 │   ├── .env.example
 │   └── requirements.txt
-│
 ├── frontend/
 │   ├── src/
 │   │   ├── App.jsx
@@ -69,12 +64,10 @@ intent/
 │   ├── package.json
 │   ├── package-lock.json
 │   └── vite.config.js
-│
 ├── .gitignore
 ├── package.json
 ├── package-lock.json
 └── README.md
-
 ## Key Features
 
 - Unique session ID for every conversation.
