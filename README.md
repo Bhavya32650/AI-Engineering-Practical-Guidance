@@ -36,6 +36,7 @@ The application uses **FastAPI, React, Groq LLM, and SQLite** to manage conversa
 - Uvicorn
 
 Project Folder Structure
+
 intent/
 │
 ├── backend/
