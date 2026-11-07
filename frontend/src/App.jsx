@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { marked } from 'marked';
 import './App.css';
+const API_BASE = 'https://ai-engineering-practical-guidance.onrender.com';
 
 const initialHistoryEntries = [
   {

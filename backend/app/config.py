@@ -28,6 +28,7 @@ ALLOWED_ORIGINS = [
     "http://localhost:5176",
     "http://127.0.0.1:4173",
     "http://localhost:4173",
+    "https://ai-engineering-practical-guidance.vercel.app"
 ]
 
 # Archive retention setting
