@@ -554,48 +554,45 @@ useEffect(() => {
   return () => clearTimeout(timer);
 }, [copiedId]);
 
+
 const loadHistoryEntries = async (items = []) => {
   const hydrated = await Promise.all(
     items.slice(0, 8).map(async (item, index) => {
-      let answer =
-        'This conversation was retrieved from the backend. Open it to review the assistant response.';
-      let question = item.preview || 'User question';
+      let messages = [];
 
       try {
         const response = await fetch(
           `${API_BASE}/api/conversations/${item.session_id}/messages`
         );
 
-        const data = await response.json();
-
-        const assistantEntry = [...(data.items || [])]
-          .reverse()
-          .find((entry) => entry.role === 'assistant');
-
-        if (assistantEntry?.content) {
-          answer = assistantEntry.content;
-        }
-
-        const userEntry = [...(data.items || [])]
-          .reverse()
-          .find((entry) => entry.role === 'user');
-
-        if (userEntry?.content) {
-          question = userEntry.content;
+        if (response.ok) {
+          const data = await response.json();
+          messages = data.items || [];
         }
       } catch (error) {
         console.log('Message details unavailable:', error);
       }
 
+      const userMessages = messages.filter(
+        (message) => message.role === 'user'
+      );
+
+      const assistantMessages = messages.filter(
+        (message) => message.role === 'assistant'
+      );
+
       return {
         id: item.session_id || `history-${index}-${Date.now()}`,
-        title: item.title || question || 'Conversation',
-        question,
-        answer,
-        time: item.updated_at ? new Date(item.updated_at).toLocaleDateString() : 'Today',
+        title: item.title || 'Conversation',
+        question: item.preview || userMessages[0]?.content || 'User question',
+        answer: assistantMessages.at(-1)?.content || '',
+        messages,
+        time: item.updated_at
+          ? new Date(item.updated_at).toLocaleDateString()
+          : 'Today',
       };
-    }));
-
+    })
+  );
     return hydrated;
   };
 
