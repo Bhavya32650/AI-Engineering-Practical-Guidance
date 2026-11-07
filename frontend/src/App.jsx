@@ -564,8 +564,7 @@ export default function App() {
       let question = item.preview || 'User question';
 
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/conversations/${item.session_id}/messages`);
-        if (response.ok) {
+        const response = await fetch(`${API_BASE}/api/conversations/${item.session_id}/messages`);
           const data = await response.json();
           const assistantEntry = [...(data.items || [])].reverse().find((entry) => entry.role === 'assistant');
           if (assistantEntry?.content) {
@@ -595,7 +594,7 @@ export default function App() {
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/conversations');
+        const response = await fetch(`${API_BASE}/api/conversations`);
         if (!response.ok) return;
 
         const data = await response.json();
@@ -622,7 +621,7 @@ export default function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/analyze', {
+      const response = await fetch(`${API_BASE}/api/analyze`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -667,7 +666,7 @@ export default function App() {
         setSessionId(data.session_id);
       }
 
-      const refreshed = await fetch('http://127.0.0.1:8000/api/conversations');
+      const refreshed = await fetch(`${API_BASE}/api/conversations`);
       const refreshedData = await refreshed.json();
       if (Array.isArray(refreshedData?.items) && refreshedData.items.length > 0) {
         const hydrated = await loadHistoryEntries(refreshedData.items);
