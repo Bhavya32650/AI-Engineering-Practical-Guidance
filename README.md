@@ -1,177 +1,265 @@
-# Week 3 – Enterprise Ingestion Firewall: Conversation Memory
+# Enterprise Structured Ingestion Firewall
+## Week 4 – Full-Stack Application Deployment
 
-## Project Overview
+# 1. Introduction
 
-This project focuses on adding conversation memory to an AI-powered chatbot.
+Enterprise Structured Ingestion Firewall is my project. Week 4 focuses on deploying the full-stack application and making it accessible online.
 
-The chatbot remembers previous messages within a conversation, understands follow-up questions, and maintains separate chat sessions using unique session IDs.
+# 2. Week 4 – Core Topics Explained
 
-The application uses **FastAPI, React, Groq LLM, and SQLite** to manage conversations and generate context-aware responses.
+### 1. Development vs. Production Environments
+- **Development:** Where we build and test an application on our local computer.
+- **Production:** Where the application is hosted online and accessed by users.
 
-## Learning Topics
+### 2. GitHub Repository Setup and Deployment Workflows
+- GitHub is used to store and manage project code.
+- Git helps track changes in the code.
+- Deployment workflows help publish code changes to hosting platforms.
 
-1. **Stateless vs. Stateful Applications:** Understanding the difference between applications that do not remember previous requests and applications that maintain information between requests.
+### 3. Deploying React + Vite on Vercel
+- React is used to create the frontend user interface.
+- Vite helps build and run the React application.
+- Vercel is a platform used to host frontend applications online.
 
-2. **System, User & Assistant Roles:** Understanding how messages are categorized as system instructions, user questions, and AI responses.
+### 4. Deploying the Backend on Render
+- The backend handles application logic and user requests.
+- FastAPI is a Python framework used to create APIs.
+- Render is a platform used to host backend applications online.
 
-3. **Conversation History & Context:** Learning how previous messages help the AI understand follow-up questions.
+### 5. Connecting Supabase to the Deployed Backend
+- Supabase provides a hosted PostgreSQL database.
+- PostgreSQL stores application data in tables.
+- The backend connects to Supabase using a database connection URL.
 
-4. **Session IDs & Chat Isolation:** Using unique session IDs to maintain separate conversations for different chats.
+### 6. Environment Variables and Secret Management
+- Environment variables store application settings such as API keys and database URLs.
+- They keep sensitive information separate from the source code.
+- Secrets should not be uploaded to GitHub.
 
-5. **Passing Chat History to Groq:** Sending previous user messages and AI responses to Groq so it can generate context-aware answers.
+### 7. Frontend–Backend API Integration and CORS
+- APIs allow the frontend and backend to communicate.
+- The frontend sends requests and receives responses from the backend.
+- CORS controls which frontend websites are allowed to access the backend.
 
-6. **Managing Chat History in FastAPI:** Handling, retrieving, and storing conversation messages through backend APIs.
+### 8. Production Testing, Debugging and Error Handling
+- Production testing checks whether the live application works correctly.
+- Debugging means finding and fixing errors.
+- Error handling manages problems and displays understandable messages.
+- Health checks help verify backend and database availability.
 
-7. **Frontend & Backend Integration, Error Handling & Testing:** Connecting the React chatbot with FastAPI, implementing New Chat, and testing conversation history, session isolation, and errors.
-
-## Technologies Used
-
-- Python
-- FastAPI
-- Groq API
-- SQLite Database
-- React.js
-- JavaScript
-- Pydantic
-- Uvicorn
-
-## Project Folder Structure
+# 3. Project Structure
 
 ```text
-intent/
-├── backend/
-│   ├── app/
-│   │   ├── schemas/
-│   │   │   ├── assistant.py
-│   │   │   └── ingestion.py
-│   │   ├── services/
-│   │   │   ├── llm_service.py
-│   │   │   ├── response_service.py
-│   │   │   ├── database_service.py
-│   │   │   ├── conversation_service.py
-│   │   │   └── memory_service.py
-│   │   ├── utils/
-│   │   │   └── token_counter.py
-│   │   ├── config.py
-│   │   └── main.py
-│   ├── .env.example
-│   └── requirements.txt
+Enterprise-Structured-Ingestion-Firewall/
+│
 ├── frontend/
 │   ├── src/
 │   │   ├── App.jsx
-│   │   └── App.css
-│   ├── index.html
+│   │   └── ...
+│   ├── public/
 │   ├── package.json
-│   ├── package-lock.json
-│   └── vite.config.js
+│   └── ...
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   └── services/
+│   │       └── database_service.py
+│   │
+│   ├── requirements.txt
+│   ├── .env
+│   └── ...
+│
 ├── .gitignore
-├── package.json
-├── package-lock.json
 └── README.md
-
-
-## Key Features
-
-- Unique session ID for every conversation.
-- New Chat functionality.
-- Separate conversation histories.
-- Stores user messages and AI responses in SQLite.
-- Retrieves previous conversation messages.
-- Sends chat history to Groq for context-aware responses.
-- Markdown-formatted AI responses.
-- Error handling and API validation.
-
-
-## Expected Workflow
-
-```text
-User Message
-     ↓
-  Session ID
-     ↓
-Retrieve Chat History
-     ↓
- SQLite Database
-     ↓
- Send Context to Groq
-     ↓
-AI Response Generation
-     ↓
-Display Response in React
 ```
 
-## API Endpoints
+*Note: This is a simplified overview of the project structure.*
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/health` | Check backend and database status |
-| GET | `/api/conversations` | Get all conversations |
-| GET | `/api/conversations/{session_id}/messages` | Get messages for a conversation |
-| POST | `/api/analyze` | Analyze message and generate AI response |
+# 4. Work Completed During Week 4
 
-## Database
+## Frontend Deployment
 
-**SQLite** is used to store conversation information locally.
+- Deployed the React + Vite frontend on Vercel.
+- Configured the build command as `npm run build`.
+- Configured the output directory as `dist`.
+- Connected the frontend to the deployed backend.
+- Verified that the frontend was accessible online.
 
-It stores:
-- Conversation session IDs
-- User messages
-- AI responses
-- Conversation timestamps
+## Backend Deployment
 
-Each session maintains its own conversation history.
-
-## Project Screenshots and Demo
-
-### Backend – Swagger API
-
-![Backend Screenshot](https://drive.google.com/file/d/1WkPf7eqSTD3B8V94aO5bdmAYN18JGqLK/view?usp=drive_link)
-
-### Frontend – Chatbot Demo
-
-[Watch Frontend Chatbot Demonstration](https://drive.google.com/file/d/1MXFFxaA5f_Jp_x08lvgrbF_T3cZLLO_v/view?usp=drive_link)
-
-## How to Run the Project
-
-### Backend
+- Deployed the FastAPI backend on Render.
+- Configured the required dependencies and environment variables.
+- Used the following start command:
 
 ```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python -m uvicorn app.main:app --reload
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-Backend URL: `http://127.0.0.1:8000`
+- Checked the backend health endpoint.
+- Resolved a missing PostgreSQL connection-pool dependency during deployment.
 
-Swagger URL: `http://127.0.0.1:8000/docs`
+## Database Integration
 
-### Frontend
+- Created a Supabase project.
+- Selected the Session Pooler connection method.
+- Connected the backend to Supabase PostgreSQL.
+- Configured `DATABASE_URL` in Render.
+- Updated the local backend `.env` file.
+- Added the PostgreSQL dependency:
 
-Open another terminal:
+```text
+psycopg[binary,pool]>=3.2
+```
+
+- Verified the database connection through the health endpoint.
+
+The health endpoint returned a successful status:
+
+```json
+{
+  "status": "ok",
+  "database": "postgres",
+  "database_ok": true,
+  "groq_api_key_configured": true
+}
+```
+
+## Frontend–Backend Integration
+
+- Connected the Vercel frontend to the Render backend.
+- Configured the production API base URL.
+- Updated CORS to allow the Vercel frontend.
+- Tested API requests and responses.
+- Verified communication between the deployed frontend and backend.
+
+## Production Testing and Database Verification
+
+- Opened the deployed frontend.
+- Tested chatbot questions and responses.
+- Checked the backend health endpoint.
+- Verified the PostgreSQL connection.
+- Checked application logs in Render.
+- Opened Supabase Table Editor.
+- Confirmed the `conversations` and `messages` tables exist.
+- Observed conversation records and user/assistant message records.
+
+**Test question:**
+
+`This is my Supabase persistence test 12345`
+
+After refreshing the `conversations` table, I observed a new conversation record containing the test question in its title.
+
+# 5. Commands Used
+
+## Frontend Commands
 
 ```bash
 cd frontend
 npm install
+npm run dev
 npm run build
-npm run preview
 ```
 
-Frontend URL: `http://localhost:4173`
+## Backend Commands
 
-## Learning Outcomes
+```bash
+cd backend
+python -m venv .venv
+```
 
-- Understood conversation memory and session management.
-- Learned how to maintain separate chat sessions.
-- Integrated Groq with conversation history.
-- Implemented SQLite-based conversation storage.
-- Connected React frontend with FastAPI backend.
-- Implemented follow-up questions and New Chat functionality.
+Activate the virtual environment in Windows PowerShell:
 
-## GitHub Repository
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
 
-**Repository:** [AI Engineering Practical Guidance](https://github.com/Bhavya32650/AI-Engineering-Practical-Guidance)
+Install dependencies:
 
-**Branch:** `week-03-conversation-memory-chat-history`
+```bash
+pip install -r requirements.txt
+```
 
+Run the backend locally:
+
+```bash
+uvicorn app.main:app --reload
+```
+
+Local backend URL:
+
+`http://127.0.0.1:8000`
+
+Local health check:
+
+`http://127.0.0.1:8000/health`
+
+## Git Commands
+
+```bash
+git status
+git add .
+git commit -m "Update deployment configuration"
+git push origin week-03-conversation-memory-chat-history
+```
+
+**Note:** Never commit `.env` files, API keys or database passwords.
+
+# 6. Deployment URLs
+
+| Service | URL |
+|---|---|
+| Frontend – Vercel | https://ai-engineering-practical-guidance.vercel.app/ |
+| Backend – Render | https://ai-engineering-practical-guidance.onrender.com |
+| Backend Health Check | https://ai-engineering-practical-guidance.onrender.com/health |
+| GitHub Repository | https://github.com/Bhavya32650/AI-Engineering-Practical-Guidance |
+
+# 7. Environment Variables
+
+The backend uses environment variables to configure application settings.
+
+Example:
+
+```env
+GROQ_API_KEY=your_groq_api_key
+GROQ_MODEL=your_model_name
+DATABASE_URL=your_supabase_database_url
+```
+
+- Local configuration is stored in `backend/.env`.
+- Production configuration is stored in Render Environment settings.
+- `.env` files must not be committed to GitHub.
+- Database passwords and API keys must remain private.
+
+# 8. Final Application Demonstration
+
+**Final Application Video:** 
+
+[Add the final application demonstration video link here after uploading.]
+
+The video will demonstrate the final application interface, its main features and how the application works.
+
+# 9. Remaining Verification
+
+The following checks are still pending:
+
+1. Verify that the matching test question and assistant response appear in the Supabase `messages` table.
+2. Test database failure handling in a controlled test environment.
+3. Confirm that the application displays an understandable error when the database is unavailable.
+4. Restore the database connection and verify that the application works again.
+
+The live production database should not be deliberately disconnected while users may be using the application.
+
+# 10. Week 4 Outcome
+
+In Week 4, I learned how to deploy a full-stack application and connect its frontend, backend and database.
+
+I deployed the frontend using Vercel, deployed the backend using Render and connected the backend to Supabase PostgreSQL.
+
+I also learned about environment variables, CORS, API integration, production testing, debugging and deployment workflows.
+
+The deployed backend health check confirmed a successful PostgreSQL connection, and a new conversation record was observed in Supabase.
+
+**Final Deployment Architecture:**
+
+GitHub Repository → Vercel Frontend + Render Backend → Supabase PostgreSQL
