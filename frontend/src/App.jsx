@@ -545,35 +545,47 @@ export default function App() {
   }, [settingsSaved]);
 
   useEffect(() => {
-    if (!profileSaved) return undefined;
+  if (!profileSaved) return undefined;
 
-    const timer = setTimeout(() => setProfileSaved(false), 2000);
-    return () => clearTimeout(timer);
-  }, [profileSaved]);
+  const timer = setTimeout(() => setProfileSaved(false), 2000);
+  return () => clearTimeout(timer);
+}, [profileSaved]);
 
-  useEffect(() => {
-    if (copiedId === null) return undefined;
+useEffect(() => {
+  if (copiedId === null) return undefined;
 
-    const timer = setTimeout(() => setCopiedId(null), 2000);
-    return () => clearTimeout(timer);
-  }, [copiedId]);
+  const timer = setTimeout(() => setCopiedId(null), 2000);
+  return () => clearTimeout(timer);
+}, [copiedId]);
 
-  const loadHistoryEntries = async (items = []) => {
-    const hydrated = await Promise.all(items.slice(0, 8).map(async (item, index) => {
-      let answer = 'This conversation was retrieved from the backend. Open it to review the assistant response.';
+const loadHistoryEntries = async (items = []) => {
+  const hydrated = await Promise.all(
+    items.slice(0, 8).map(async (item, index) => {
+      let answer =
+        'This conversation was retrieved from the backend. Open it to review the assistant response.';
       let question = item.preview || 'User question';
 
       try {
-        const response = await fetch(`${API_BASE}/api/conversations/${item.session_id}/messages`);
-          const data = await response.json();
-          const assistantEntry = [...(data.items || [])].reverse().find((entry) => entry.role === 'assistant');
-          if (assistantEntry?.content) {
-            answer = assistantEntry.content;
-          }
-          const userEntry = [...(data.items || [])].reverse().find((entry) => entry.role === 'user');
-          if (userEntry?.content) {
-            question = userEntry.content;
-          }
+        const response = await fetch(
+          `${API_BASE}/api/conversations/${item.session_id}/messages`
+        );
+
+        const data = await response.json();
+
+        const assistantEntry = [...(data.items || [])]
+          .reverse()
+          .find((entry) => entry.role === 'assistant');
+
+        if (assistantEntry?.content) {
+          answer = assistantEntry.content;
+        }
+
+        const userEntry = [...(data.items || [])]
+          .reverse()
+          .find((entry) => entry.role === 'user');
+
+        if (userEntry?.content) {
+          question = userEntry.content;
         }
       } catch (error) {
         console.log('Message details unavailable:', error);
