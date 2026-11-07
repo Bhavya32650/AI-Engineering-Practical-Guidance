@@ -407,31 +407,27 @@ function ChatbotApp({
                   ))}
                 </div>
 
-                <div className="history-detail">
-                  {selectedHistory && (
-                    <>
-                      <div className="detail-tag">Selected conversation</div>
-                      <h3>{selectedHistory.title}</h3>
-                      <div className="detail-block">
-                        <span>Question</span>
-                        <p>{selectedHistory.question}</p>
-                      </div>
-                      <div className="detail-block">
-                        <span>Response</span>
-                        <p>{stripMarkdown(selectedHistory.answer)}</p>
-                      </div>
-                      <button
-                        type="button"
-                        className={`copy-btn ${copiedId === selectedHistory.id ? 'history-copied' : ''}`}
-                        onClick={handleCopy}
-                      >
-                        {copiedId === selectedHistory.id ? 'Copied!' : 'Copy response'}
-                      </button>
-                    </>
-                  )}
+                
+<div className="history-detail">
+  {selectedHistory && (
+    <>
+      <div className="detail-tag">Selected conversation</div>
+      <h3>{selectedHistory.title}</h3>
+
+      {selectedHistory.messages?.map((message, index) => (
+        <div className="detail-block" key={index}>
+          <span>
+            {message.role === 'user' ? 'Question' : 'Response'}
+          </span>
+          <p>{stripMarkdown(message.content)}</p>
+        </div>
+      ))}
+    </>
+  )}
+</div>
+
                 </div>
               </div>
-            </div>
           )}
 
           {activeView === 'settings' && (
