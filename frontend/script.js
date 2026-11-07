@@ -1,5 +1,5 @@
 
-const API_URL = "http://127.0.0.1:8000/api/ingest";
+const API_URL = "https://ai-engineering-practical-guidance.onrender.com/api/ingest";
 
 const chatForm = document.getElementById("chatForm");
 const messageInput = document.getElementById("message");
