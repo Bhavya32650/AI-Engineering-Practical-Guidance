@@ -235,7 +235,7 @@ DATABASE_URL=your_supabase_database_url
 
 **Final Application Video:** 
 
-[Add the final application demonstration video link here after uploading.]
+[https://drive.google.com/file/d/13aRG8SPMYZDlV66Vf6J3G-34clB3ETeO/view?usp=sharing]
 
 The video will demonstrate the final application interface, its main features and how the application works.
 
