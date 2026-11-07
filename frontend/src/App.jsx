@@ -422,6 +422,15 @@ function ChatbotApp({
           <p>{stripMarkdown(message.content)}</p>
         </div>
       ))}
+      
+<button
+  type="button"
+  className={`copy-btn ${copiedId === selectedHistory.id ? 'history-copied' : ''}`}
+  onClick={handleCopy}
+>
+  {copiedId === selectedHistory.id ? 'Copied!' : 'Copy response'}
+</button>
+
     </>
   )}
 </div>
